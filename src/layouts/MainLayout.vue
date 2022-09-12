@@ -15,7 +15,26 @@
 
                 <q-btn-dropdown flat color="white" icon="person">
                     <q-list>
+                        <q-item clickable :to="{ name: 'tipo-produto-list' }">
+                            <q-item-section avatar>
+                                <q-avatar
+                                    icon="mdi-cog"
+                                    color="primary"
+                                    text-color="white"
+                                />
+                            </q-item-section>
+                            <q-item-section>
+                                <q-item-label>Configuração</q-item-label>
+                            </q-item-section>
+                        </q-item>
+                        <q-separator />
                         <q-item clickable v-close-popup @click="handleLogout">
+                            <q-item-section avatar>
+                                <q-avatar
+                                    icon="mdi-exit-to-app"
+                                    text-color="primary"
+                                />
+                            </q-item-section>
                             <q-item-section>
                                 <q-item-label>Logout</q-item-label>
                             </q-item-section>
@@ -52,46 +71,10 @@ import { useQuasar } from "quasar";
 
 const linksList = [
     {
-        title: "Docs",
-        caption: "quasar.dev",
-        icon: "school",
-        link: "https://quasar.dev",
-    },
-    {
-        title: "Github",
-        caption: "github.com/quasarframework",
-        icon: "code",
-        link: "https://github.com/quasarframework",
-    },
-    {
-        title: "Discord Chat Channel",
-        caption: "chat.quasar.dev",
-        icon: "chat",
-        link: "https://chat.quasar.dev",
-    },
-    {
-        title: "Forum",
-        caption: "forum.quasar.dev",
-        icon: "record_voice_over",
-        link: "https://forum.quasar.dev",
-    },
-    {
-        title: "Twitter",
-        caption: "@quasarframework",
-        icon: "rss_feed",
-        link: "https://twitter.quasar.dev",
-    },
-    {
-        title: "Facebook",
-        caption: "@QuasarFramework",
-        icon: "public",
-        link: "https://facebook.quasar.dev",
-    },
-    {
-        title: "Quasar Awesome",
-        caption: "Community Quasar projects",
-        icon: "favorite",
-        link: "https://awesome.quasar.dev",
+        title: "Proventos",
+        caption: "Movimentação de Dividendos",
+        icon: "mdi-cash-plus",
+        routerName: "provento-list",
     },
 ];
 

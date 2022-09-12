@@ -1,5 +1,5 @@
 <template>
-    <q-item clickable tag="a" target="_blank" :href="link">
+    <q-item clickable tag="a" exact :to="{ name: routerName }">
         <q-item-section v-if="icon" avatar>
             <q-icon :name="icon" />
         </q-item-section>
@@ -16,6 +16,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
     name: "EssentialLink",
+
     props: {
         title: {
             type: String,
@@ -27,9 +28,9 @@ export default defineComponent({
             default: "",
         },
 
-        link: {
+        routerName: {
             type: String,
-            default: "#",
+            default: "me",
         },
 
         icon: {

@@ -36,8 +36,6 @@ export default route(
 
         Router.beforeEach(to => {
             const userStore = useUserStore();
-
-            console.log(to);
             if (
                 to.hash.includes("type=recovery") &&
                 to.name !== "reset-password"

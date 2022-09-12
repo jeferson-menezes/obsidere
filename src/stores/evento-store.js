@@ -3,59 +3,52 @@ import useSupabase from "src/boot/supabase";
 
 const { supabase } = useSupabase();
 
-export const useTipoProdutoStore = defineStore({
-    id: "tipoProduto",
-    state: () => ({
-        tipos: [],
-        classesText: {
-            RENDA_FIXA: "Renda Fixa",
-            RENDA_VARIAVEL: "Renda Variável"
-        }
-    }),
-    getters: {
-        classeText() {
-            return classe => this.classesText[classe];
-        }
-    },
+export const useEventoStore = defineStore({
+    id: "evento",
+    state: () => ({ eventos: [] }),
     actions: {
         async list() {
             const { data, error } = await supabase
-                .from("type-product")
+                .from("event")
                 .select("*");
 
             if (error) throw error;
-            this.tipos = data;
+            this.eventos = data;
             return data;
         },
-        async post(tipo) {
+
+        async post(evento) {
             const { data, error } = await supabase
-                .from("type-product")
-                .insert([tipo]);
+                .from("event")
+                .insert([evento]);
 
             if (error) throw error;
             return data;
         },
+
         async getById(id) {
             const { data, error } = await supabase
-                .from("type-product")
+                .from("event")
                 .select("*")
                 .eq("id", id);
 
             if (error) throw error;
             return data[0];
         },
-        async update(tipo) {
+
+        async update(evento) {
             const { data, error } = await supabase
-                .from("type-product")
-                .update([tipo])
-                .match({ id: tipo.id });
+                .from("event")
+                .update([evento])
+                .match({ id: evento.id });
 
             if (error) throw error;
             return data;
         },
+
         async remove(id) {
             const { data, error } = await supabase
-                .from("type-product")
+                .from("event")
                 .delete()
                 .match({ id });
         }

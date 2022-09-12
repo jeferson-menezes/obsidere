@@ -3,59 +3,52 @@ import useSupabase from "src/boot/supabase";
 
 const { supabase } = useSupabase();
 
-export const useTipoProdutoStore = defineStore({
-    id: "tipoProduto",
-    state: () => ({
-        tipos: [],
-        classesText: {
-            RENDA_FIXA: "Renda Fixa",
-            RENDA_VARIAVEL: "Renda Variável"
-        }
-    }),
-    getters: {
-        classeText() {
-            return classe => this.classesText[classe];
-        }
-    },
+export const useSetorStore = defineStore({
+    id: "setor",
+    state: () => ({ setores: [] }),
     actions: {
         async list() {
             const { data, error } = await supabase
-                .from("type-product")
+                .from("sector")
                 .select("*");
 
             if (error) throw error;
-            this.tipos = data;
+            this.setores = data;
             return data;
         },
-        async post(tipo) {
+
+        async post(setor) {
             const { data, error } = await supabase
-                .from("type-product")
-                .insert([tipo]);
+                .from("sector")
+                .insert([setor]);
 
             if (error) throw error;
             return data;
         },
+
         async getById(id) {
             const { data, error } = await supabase
-                .from("type-product")
+                .from("sector")
                 .select("*")
                 .eq("id", id);
 
             if (error) throw error;
             return data[0];
         },
-        async update(tipo) {
+
+        async update(setor) {
             const { data, error } = await supabase
-                .from("type-product")
-                .update([tipo])
-                .match({ id: tipo.id });
+                .from("sector")
+                .update([setor])
+                .match({ id: setor.id });
 
             if (error) throw error;
             return data;
         },
+
         async remove(id) {
             const { data, error } = await supabase
-                .from("type-product")
+                .from("sector")
                 .delete()
                 .match({ id });
         }

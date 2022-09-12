@@ -45,14 +45,76 @@ const routes = [
                 component: () => import("pages/Me.vue")
             },
             {
+                path: "provento",
+                name: "provento-list",
+                component: () => import("pages/provento/ProventoList.vue")
+            },
+            {
+                path: "provento/form/:id?",
+                name: "provento-form",
+                component: () => import("pages/provento/ProventoForm.vue")
+            },
+            {
                 path: "configuracao",
                 name: "configuracao",
+                meta: { title: "Configurações" },
                 component: () => import("pages/config/ConfigPage.vue"),
                 children: [
                     {
+                        path: "produto",
+                        name: "produto-list",
+                        meta: { title: "Produtos" },
+                        component: () =>
+                            import("src/pages/config/produto/ProdutoList.vue")
+                    },
+                    {
                         path: "tipo/produto",
-                        name: "tipo-produto",
-                        component: () => import("pages/config/TipoProduto.vue")
+                        name: "tipo-produto-list",
+                        meta: { title: "Tipos de Produtos" },
+                        component: () =>
+                            import("src/pages/config/tipo-produto/TipoProdutoList.vue")
+                    },
+                    {
+                        path: "setor",
+                        name: "setor-list",
+                        meta: { title: "Setores" },
+                        component: () =>
+                            import("src/pages/config/setor/SetorList.vue")
+                    },
+                    {
+                        path: "evento",
+                        name: "evento-list",
+                        meta: { title: "Eventos" },
+                        component: () =>
+                            import("src/pages/config/evento/EventoList.vue")
+                    },
+                    {
+                        path: "evento/form/:id?",
+                        name: "evento-form",
+                        meta: { title: "Eventos" },
+                        component: () =>
+                            import("src/pages/config/evento/EventoForm.vue")
+                    },
+                    {
+                        path: "produto/form/:id?",
+                        name: "produto-form",
+                        meta: { title: "Produtos" },
+                        component: () =>
+                            import("src/pages/config/produto/ProdutoForm.vue")
+                    },
+                    {
+                        path: "tipo/produto/form/:id?",
+                        name: "tipo-produto-form",
+                        meta: { title: "Tipos de Produtos" },
+                        component: () =>
+                            import("src/pages/config/tipo-produto/TipoProdutoForm.vue")
+                    },
+                    {
+                        path: "setor/form/:id?",
+                        name: "setor-form",
+                        meta: { title: "Setores" },
+                        component: () =>
+                            import("src/pages/config/setor/SetorForm.vue")
                     }
                 ]
             }

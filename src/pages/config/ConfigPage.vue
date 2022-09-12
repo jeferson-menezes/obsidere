@@ -1,29 +1,55 @@
 <template>
-    <div class="row">
-        <div class="col-3">
-            <q-tabs v-model="tab" vertical class="text-teal">
+    <q-splitter v-model="splitterModel" :horizontal="$q.platform.is.mobile">
+        <template v-slot:before>
+            <q-tabs 
+                no-caps
+                inline-label
+                outside-arrows
+                mobile-arrows
+                align="left"
+                :breakpoint="500"
+                v-model="tab"
+                :vertical="$q.platform.is.desktop"
+                class="text-teal"
+            >
                 <q-route-tab
-                    icon="mail"
-                    label="Tipo de Produto"
-                    :to="{ name: 'tipo-produto' }"
+                    :to="{ name: 'produto-list' }"
+                    name="produto"
+                    icon="mdi-chart-areaspline"
+                    label="Produto"
                 />
+
                 <q-route-tab
-                    icon="alarm"
-                    label="Alarms"
-                    :to="{ name: 'tipo-produto' }"
+                    :to="{ name: 'tipo-produto-list' }"
+                    name="tipos"
+                    icon="category"
+                    label="Tipo Produto"
                 />
+
                 <q-route-tab
-                    icon="movie"
-                    label="Movies"
-                    :to="{ name: 'tipo-produto' }"
+                    :to="{ name: 'evento-list' }"
+                    name="evento"
+                    icon="mdi-calendar-heart"
+                    label="Evento"
+                />
+
+                <q-route-tab
+                    :to="{ name: 'setor-list' }"
+                    name="setores"
+                    icon="mdi-graph"
+                    label="Setores"
                 />
             </q-tabs>
-        </div>
+        </template>
 
-        <div class="col">
-            <router-view />
-        </div>
-    </div>
+        <template v-slot:after>
+            <div class="text-h5 q-ma-md">
+                {{ $route.meta.title }}
+            </div>
+
+            <router-view></router-view>
+        </template>
+    </q-splitter>
 </template>
 
 <script >
@@ -33,7 +59,7 @@ export default defineComponent({
     name: "ConfigPage",
     setup() {
         return {
-            tab: ref("mails"),
+            tab: ref("produto"),
             splitterModel: ref(20),
         };
     },
