@@ -28,6 +28,40 @@ export const useProventoStore = defineStore({
 
             if (error) throw error;
             return data;
+        },
+
+        async list() {
+            const { data, error, count } = await supabase
+                .from("earning")
+                .select("*, product_id(code, name), event_id(name)", {
+                    count: "exact"
+                })
+                .range(0, 3);
+
+            console.log(count);
+            if (error) throw error;
+            this.proventos = data;
+            return data;
+        },
+
+        async remove(id) {
+            const { data, error } = await supabase
+                .from("earning")
+                .delete()
+                .match({ id });
+
+            if (error) throw error;
+            return data;
+        },
+
+        async update(provento) {
+            const { data, error } = await supabase
+                .from("earning")
+                .update([provento])
+                .match({ id: provento.id });
+
+            if (error) throw error;
+            return data;
         }
     }
 });

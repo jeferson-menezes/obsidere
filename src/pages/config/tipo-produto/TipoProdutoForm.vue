@@ -102,6 +102,7 @@ export default defineComponent({
         };
 
         onMounted(() => {
+            
             if (isUpdate.value) {
                 handleGetTipo(isUpdate.value);
             }

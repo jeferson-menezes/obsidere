@@ -45,9 +45,7 @@
                     lazy-rules
                     mask="#"
                     reverse-fill-mask
-                    :rules="[
-                        (v) => (v && v.length > 0) || 'Código is required',
-                    ]"
+                    :rules="[(v) => !!v || 'Código is required']"
                 ></q-input>
 
                 <q-input
@@ -132,12 +130,12 @@
 
 <script>
 import useNotify from "src/composable/useNotify";
+import { dBrToUs } from "src/helper/date-helper";
 import { useEventoStore } from "src/stores/evento-store";
 import { useProdutoStore } from "src/stores/produto-store";
 import { useProventoStore } from "src/stores/provento-store";
 import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { dBrToUs } from "src/helper/date-helper";
 
 export default defineComponent({
     name: "ProventoFormPage",
@@ -175,16 +173,22 @@ export default defineComponent({
 
                 const f = {
                     date: dBrToUs(date),
-                    unitary_value: +unitary_value.replace(",", ""),
-                    net_value: +net_value.replace(",", ""),
-                    amount:+amount,
+                    unitary_value: +unitary_value.replace(",", "."),
+                    net_value: +net_value.replace(",", "."),
+                    amount: +amount,
                     event_id,
                     product_id,
                 };
 
-                console.log(f);
                 loading.value = true;
-                await proventoStore.post(f);
+                if (isUpdate.value) {
+                    f.id = isUpdate.value;
+                    await proventoStore.update(f);
+                    router.push({ name: "provento-list" });
+                } else {
+                    await proventoStore.post(f);
+                    formRef.value.reset()
+                }
                 notifySuccess(
                     isUpdate.value ? "Atualizado" : "Cadastrado" + "com sucesso"
                 );
@@ -195,9 +199,21 @@ export default defineComponent({
             }
         };
 
+        const handleGetProvento = async (id) => {
+            try {
+                form.value = await proventoStore.getById(id);
+            } catch (error) {
+                notifyError(error.message);
+            }
+        };
+
         onMounted(() => {
             eventoStore.list();
             produtoStore.list();
+
+            if (isUpdate.value) {
+                handleGetProvento(isUpdate.value);
+            }
         });
 
         return {

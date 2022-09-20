@@ -52,6 +52,9 @@ export const useProdutoStore = defineStore({
                 .from("product")
                 .delete()
                 .match({ id });
+                
+            if (error) throw error;
+            return data;
         }
     }
 });
